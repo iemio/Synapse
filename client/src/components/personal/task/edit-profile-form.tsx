@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import { useAuthContext } from "@/context/auth-provider";
 import { useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -20,63 +20,67 @@ import useWorkspaceId from "@/hooks/use-workspace-id";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
 import { Permissions } from "@/constant";
+import useUserId from "@/hooks/api/use-user-id";
+import Profile from "@/page/personal/Profile";
 
-export default function EditWorkspaceForm() {
-    const { workspace, hasPermission } = useAuthContext();
-    const canEditWorkspace = hasPermission(Permissions.EDIT_WORKSPACE);
-
+export default function EditProfileForm() {
     const queryClient = useQueryClient();
-    const workspaceId = useWorkspaceId();
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: editWorkspaceMutationFn,
-    });
+    const { user } = useAuthContext();
+
+    const userId = useUserId();
+    // const { mutate, isPending } = useMutation({
+    //     mutationFn: editProfileMutationFn,
+    // });
+    const isPending = true;
 
     const formSchema = z.object({
         name: z.string().trim().min(1, {
-            message: "Workspace name is required",
+            message: "Profile name is required",
         }),
-        description: z.string().trim(),
+        email: z.string().trim(),
     });
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            description: "",
+            email: "",
         },
     });
 
+    //add edit pic also
+
     useEffect(() => {
-        if (workspace) {
-            form.setValue("name", workspace.name);
-            form.setValue("description", workspace?.description || "");
+        if (user) {
+            form.setValue("name", user.name);
+            form.setValue("email", user?.email || "");
         }
-    }, [form, workspace]);
+    }, [form, user]);
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         if (isPending) return;
         const payload = {
-            workspaceId: workspaceId,
+            userId: userId,
             data: { ...values },
         };
-        mutate(payload, {
-            onSuccess: () => {
-                queryClient.invalidateQueries({
-                    queryKey: ["workspace"],
-                });
-                queryClient.invalidateQueries({
-                    queryKey: ["userWorkspaces"],
-                });
-            },
-            onError: (error) => {
-                toast({
-                    title: "Error",
-                    description: error.message,
-                    variant: "destructive",
-                });
-            },
-        });
+        // mutate(payload, {
+        //     onSuccess: () => {
+        //         queryClient.invalidateQueries({
+        //             queryKey: ["workspace"],
+        //         });
+        //         queryClient.invalidateQueries({
+        //             queryKey: ["userWorkspaces"],
+        //         });
+        //     },
+        //     onError: (error) => {
+        //         toast({
+        //             title: "Error",
+        //             description: error.message,
+        //             variant: "destructive",
+        //         });
+        //     },
+        // });
     };
 
     return (
@@ -87,7 +91,7 @@ export default function EditWorkspaceForm() {
                         className="text-[17px] tracking-[-0.16px] dark:text-[#fcfdffef] font-semibold mb-1.5
            text-center sm:text-left"
                     >
-                        Edit Workspace
+                        Edit Profile
                     </h1>
                 </div>
                 <Form {...form}>
@@ -99,13 +103,12 @@ export default function EditWorkspaceForm() {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                            Workspace name
+                                            User name
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 placeholder="Taco's Co."
                                                 className="!h-[48px] disabled:opacity-90 disabled:pointer-events-none"
-                                                disabled={!canEditWorkspace}
                                                 {...field}
                                             />
                                         </FormControl>
@@ -117,21 +120,17 @@ export default function EditWorkspaceForm() {
                         <div className="mb-4">
                             <FormField
                                 control={form.control}
-                                name="description"
+                                name="email"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                            Workspace description
-                                            <span className="text-xs font-extralight ml-2">
-                                                Optional
-                                            </span>
+                                            Email
                                         </FormLabel>
                                         <FormControl>
-                                            <Textarea
-                                                rows={6}
-                                                disabled={!canEditWorkspace}
-                                                className="disabled:opacity-90 disabled:pointer-events-none"
-                                                placeholder="Our team organizes marketing projects and tasks here."
+                                            <Input
+                                                placeholder="Taco's Co."
+                                                className="!h-[48px] disabled:opacity-60 disabled:pointer-events-none"
+                                                disabled
                                                 {...field}
                                             />
                                         </FormControl>
@@ -140,20 +139,14 @@ export default function EditWorkspaceForm() {
                                 )}
                             />
                         </div>
-                        {canEditWorkspace && (
-                            <Button
-                                className="flex place-self-end  h-[40px] text-white font-semibold"
-                                disabled={isPending}
-                                type="submit"
-                            >
-                                {isPending && (
-                                    <Loader className="animate-spin" />
-                                )}
-                                {isPending
-                                    ? "Updating Workspace"
-                                    : "Update Workspace"}
-                            </Button>
-                        )}
+                        <Button
+                            className="flex place-self-end  h-[40px] text-white font-semibold"
+                            disabled={isPending}
+                            type="submit"
+                        >
+                            {isPending && <Loader className="animate-spin" />}
+                            Update Profile
+                        </Button>
                     </form>
                 </Form>
             </div>
