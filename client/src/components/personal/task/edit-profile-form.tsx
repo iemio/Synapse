@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../../ui/textarea";
 import { useAuthContext } from "@/context/auth-provider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editWorkspaceMutationFn } from "@/lib/api";
 import useWorkspaceId from "@/hooks/use-workspace-id";
@@ -22,11 +22,15 @@ import { Loader } from "lucide-react";
 import { Permissions } from "@/constant";
 import useUserId from "@/hooks/api/use-user-id";
 import Profile from "@/page/personal/Profile";
+import { profile } from "console";
+import SkillsInput from "@/components/ui/skills-input";
 
 export default function EditProfileForm() {
     const queryClient = useQueryClient();
 
     const { user } = useAuthContext();
+
+    const [skills, setSkills] = useState<string[]>([]);
 
     const userId = useUserId();
     // const { mutate, isPending } = useMutation({
@@ -39,6 +43,7 @@ export default function EditProfileForm() {
             message: "Profile name is required",
         }),
         email: z.string().trim(),
+        skills: z.array(z.string()).default([]),
     });
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -46,6 +51,7 @@ export default function EditProfileForm() {
         defaultValues: {
             name: "",
             email: "",
+            skills: [],
         },
     });
 
@@ -139,8 +145,47 @@ export default function EditProfileForm() {
                                 )}
                             />
                         </div>
+
+                        {/* Skills Section */}
+                        <div className="mb-4">
+                            <FormField
+                                control={form.control}
+                                name="skills"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                                            Skills
+                                        </FormLabel>
+                                        <FormControl>
+                                            <SkillsInput
+                                                ref={field.ref} // Forwarding the ref
+                                                skills={field.value} // Passing current skills array
+                                                onAdd={(newSkill) =>
+                                                    field.onChange([
+                                                        ...field.value,
+                                                        newSkill,
+                                                    ])
+                                                } // Update form state
+                                                onRemove={(skillToRemove) =>
+                                                    field.onChange(
+                                                        field.value.filter(
+                                                            (skill) =>
+                                                                skill !==
+                                                                skillToRemove
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
+                        {/* Submit button */}
                         <Button
-                            className="flex place-self-end  h-[40px] text-white font-semibold"
+                            className="flex place-self-end h-[40px] text-white font-semibold"
                             disabled={isPending}
                             type="submit"
                         >

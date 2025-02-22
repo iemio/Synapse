@@ -1,6 +1,6 @@
 import EditProfileForm from "@/components/personal/task/edit-profile-form";
 import useUserId from "@/hooks/api/use-user-id";
-import { Separator } from "@radix-ui/react-separator";
+import { Separator } from "@/components/ui/separator";
 import React from "react";
 
 const Profile = () => {
