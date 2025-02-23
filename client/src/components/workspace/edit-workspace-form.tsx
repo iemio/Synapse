@@ -28,6 +28,9 @@ export default function EditWorkspaceForm() {
     const queryClient = useQueryClient();
     const workspaceId = useWorkspaceId();
 
+    // console.log("hellooooo");
+    // console.log(queryClient.getQueryData(["workspace"]));
+
     const { mutate, isPending } = useMutation({
         mutationFn: editWorkspaceMutationFn,
     });
@@ -63,9 +66,11 @@ export default function EditWorkspaceForm() {
         mutate(payload, {
             onSuccess: () => {
                 queryClient.invalidateQueries({
+                    //query with that key hasn’t been set or fetched yet.
                     queryKey: ["workspace"],
                 });
                 queryClient.invalidateQueries({
+                    //query with that key hasn’t been set or fetched yet.
                     queryKey: ["userWorkspaces"],
                 });
             },

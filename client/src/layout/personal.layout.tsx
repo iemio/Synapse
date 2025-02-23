@@ -27,6 +27,3 @@ const PersonalLayout = () => {
 };
 
 export default PersonalLayout;
-// give custom skeleton to this
-// do same as nav-links
-// go to dashboard button

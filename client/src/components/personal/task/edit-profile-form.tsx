@@ -15,7 +15,7 @@ import { Textarea } from "../../ui/textarea";
 import { useAuthContext } from "@/context/auth-provider";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editWorkspaceMutationFn } from "@/lib/api";
+import { editUserProfileMutationFn, editWorkspaceMutationFn } from "@/lib/api";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
@@ -30,13 +30,10 @@ export default function EditProfileForm() {
 
     const { user } = useAuthContext();
 
-    const [skills, setSkills] = useState<string[]>([]);
-
     const userId = useUserId();
-    // const { mutate, isPending } = useMutation({
-    //     mutationFn: editProfileMutationFn,
-    // });
-    const isPending = true;
+    const { mutate, isPending } = useMutation({
+        mutationFn: editUserProfileMutationFn,
+    });
 
     const formSchema = z.object({
         name: z.string().trim().min(1, {
@@ -61,6 +58,7 @@ export default function EditProfileForm() {
         if (user) {
             form.setValue("name", user.name);
             form.setValue("email", user?.email || "");
+            form.setValue("skills", user?.skills || []);
         }
     }, [form, user]);
 
@@ -70,23 +68,21 @@ export default function EditProfileForm() {
             userId: userId,
             data: { ...values },
         };
-        // mutate(payload, {
-        //     onSuccess: () => {
-        //         queryClient.invalidateQueries({
-        //             queryKey: ["workspace"],
-        //         });
-        //         queryClient.invalidateQueries({
-        //             queryKey: ["userWorkspaces"],
-        //         });
-        //     },
-        //     onError: (error) => {
-        //         toast({
-        //             title: "Error",
-        //             description: error.message,
-        //             variant: "destructive",
-        //         });
-        //     },
-        // });
+        mutate(payload, {
+            onSuccess: () => {
+                //query with that key hasn’t been set or fetched yet.
+                queryClient.invalidateQueries({
+                    queryKey: ["userProfile"],
+                });
+            },
+            onError: (error) => {
+                toast({
+                    title: "Error",
+                    description: error.message,
+                    variant: "destructive",
+                });
+            },
+        });
     };
 
     return (
@@ -134,8 +130,8 @@ export default function EditProfileForm() {
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="Taco's Co."
-                                                className="!h-[48px] disabled:opacity-60 disabled:pointer-events-none"
+                                                placeholder="example@xyz.com"
+                                                className="!h-[48px]"
                                                 disabled
                                                 {...field}
                                             />

@@ -1,6 +1,7 @@
 import React, { useState, forwardRef } from "react";
 import { Button } from "./button";
 import { Input } from "./input";
+import { ListMinus, ListPlus, Plus } from "lucide-react";
 
 interface SkillsInputProps extends React.ComponentProps<"input"> {
     skills: string[];
@@ -43,9 +44,9 @@ const SkillsInput = forwardRef<HTMLInputElement, SkillsInputProps>(
                     <Button
                         type="button"
                         onClick={handleAddSkill}
-                        className="!h-[48px]  text-white font-semibold"
+                        className="!h-[48px] text-white font-semibold bg-blue-500 hover:bg-blue-600"
                     >
-                        Add
+                        <ListPlus className="!w-[22px] !h-[22px]" />
                     </Button>
                 </div>
 
@@ -62,7 +63,7 @@ const SkillsInput = forwardRef<HTMLInputElement, SkillsInputProps>(
                                 onClick={() => onRemove(skill)}
                                 className="text-red-500 hover:text-red-700"
                             >
-                                ✖
+                                <ListMinus className="w-[16px] h-[16px]" />
                             </button>
                         </span>
                     ))}
