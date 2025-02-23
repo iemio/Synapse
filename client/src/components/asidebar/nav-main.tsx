@@ -6,6 +6,8 @@ import {
     Users,
     CheckCircle,
     LayoutDashboard,
+    PackageCheck,
+    SquareCheckBig,
 } from "lucide-react";
 import {
     SidebarGroup,
@@ -17,6 +19,7 @@ import { Link, useLocation } from "react-router-dom";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { useAuthContext } from "@/context/auth-provider";
 import { Permissions } from "@/constant";
+import useUserId from "@/hooks/api/use-user-id";
 
 type ItemType = {
     title: string;
@@ -32,6 +35,7 @@ export function NavMain() {
     );
 
     const workspaceId = useWorkspaceId();
+    const userId = useUserId();
     const location = useLocation();
 
     const pathname = location.pathname;
@@ -43,9 +47,14 @@ export function NavMain() {
             icon: LayoutDashboard,
         },
         {
-            title: "Tasks",
+            title: "My Tasks",
+            url: `/workspace/${workspaceId}/tasks/${userId}`,
+            icon: SquareCheckBig,
+        },
+        {
+            title: "All Tasks",
             url: `/workspace/${workspaceId}/tasks`,
-            icon: CheckCircle,
+            icon: PackageCheck,
         },
         {
             title: "Members",
