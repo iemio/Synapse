@@ -11,6 +11,7 @@ import {
     CreateTaskPayloadType,
     CreateWorkspaceResponseType,
     EditProjectPayloadType,
+    EditUserAvatarType,
     EditUserType,
     ProjectByIdPayloadType,
     ProjectResponseType,
@@ -49,6 +50,14 @@ export const editUserProfileMutationFn = async ({
     data,
 }: EditUserType) => {
     const response = await API.put(`/user/update/${userId}`, data);
+    return response.data;
+};
+
+export const editUserProfileCoverMutationFn = async ({
+    userId,
+    data,
+}: EditUserAvatarType) => {
+    const response = await API.put(`/user/update/avatar/${userId}`, data);
     return response.data;
 };
 

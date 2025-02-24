@@ -46,6 +46,13 @@ export type EditUserType = {
     };
 };
 
+export type EditUserAvatarType = {
+    userId: string;
+    data: {
+        profilePicture: string | null;
+    };
+};
+
 export type CurrentUserResponseType = {
     message: string;
     user: UserType;
