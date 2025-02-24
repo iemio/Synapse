@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RecentMembers from "@/components/workspace/member/recent-members";
 import RecentProjects from "@/components/workspace/project/recent-projects";
-import KanbanBoard from "@/components/workspace/task/kanban/kanban-board";
-import RecentTasks from "@/components/workspace/task/recent-tasks";
+import KanbanBoard from "@/components/workspace/task/kanban-try/KanbanBoard";
+import Kanban from "@/components/workspace/task/kanban-try2/kanban";
 import React from "react";
 
 const UserTasks = () => {
@@ -24,7 +24,7 @@ const UserTasks = () => {
                     <RecentProjects />
                 </TabsContent>
                 <TabsContent value="kanban">
-                    <KanbanBoard />
+                    <Kanban />
                 </TabsContent>
                 <TabsContent value="calendar">
                     <RecentMembers />
