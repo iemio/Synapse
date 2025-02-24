@@ -1,7 +1,5 @@
 import EditProfileForm from "@/components/personal/profile/edit-profile-form";
-import useUserId from "@/hooks/api/use-user-id";
 import { Separator } from "@/components/ui/separator";
-import React from "react";
 import ProfileCover from "@/components/personal/profile/profile-cover-avatar";
 
 const Profile = () => {

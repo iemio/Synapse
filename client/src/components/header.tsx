@@ -194,7 +194,6 @@ import { Separator } from "./ui/separator";
 import { Link, useLocation } from "react-router-dom";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import LogoutDialog from "./asidebar/logout-dialog";
-import { SidebarMenuButton, SidebarFooter } from "@/components/ui/sidebar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -203,20 +202,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-    CircleArrowLeft,
-    EllipsisIcon,
-    LayoutDashboard,
-    LogOut,
-    SquareArrowOutUpRight,
-} from "lucide-react";
+import { LayoutDashboard, LogOut, SquareArrowOutUpRight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuthContext } from "@/context/auth-provider";
 import { useState } from "react";
 
 import { LucideIcon, Settings2, UserPen } from "lucide-react";
-import useAuth from "@/hooks/api/use-auth";
-import Logo from "./logo";
 
 type ItemType = {
     title: string;
