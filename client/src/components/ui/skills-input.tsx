@@ -1,7 +1,7 @@
 import React, { useState, forwardRef } from "react";
 import { Button } from "./button";
 import { Input } from "./input";
-import { ListMinus, ListPlus, Plus } from "lucide-react";
+import { ListMinus, ListPlus } from "lucide-react";
 
 interface SkillsInputProps extends React.ComponentProps<"input"> {
     skills: string[];

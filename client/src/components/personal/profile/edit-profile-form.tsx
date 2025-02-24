@@ -11,18 +11,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "../../ui/textarea";
 import { useAuthContext } from "@/context/auth-provider";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editUserProfileMutationFn, editWorkspaceMutationFn } from "@/lib/api";
-import useWorkspaceId from "@/hooks/use-workspace-id";
+import { editUserProfileMutationFn } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
-import { Permissions } from "@/constant";
 import useUserId from "@/hooks/api/use-user-id";
-import Profile from "@/page/personal/Profile";
-import { profile } from "console";
+
 import SkillsInput from "@/components/ui/skills-input";
 
 export default function EditProfileForm() {

@@ -3,10 +3,8 @@ import RecentMembers from "@/components/workspace/member/recent-members";
 import RecentProjects from "@/components/workspace/project/recent-projects";
 import { CustomKanban } from "@/components/workspace/task/kanban-try-3/Custom-kanban";
 import { Calendar, Kanban, TableOfContents } from "lucide-react";
-import React from "react";
 
 const UserTasks = () => {
-    const initialColumns = ["To Do", "In Progress", "Done"];
     return (
         <div className="mt-4">
             <Tabs defaultValue="table" className="w-full border rounded-lg p-2">

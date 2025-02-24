@@ -4,7 +4,6 @@ import {
     LucideIcon,
     Settings,
     Users,
-    CheckCircle,
     LayoutDashboard,
     PackageCheck,
     SquareCheckBig,
