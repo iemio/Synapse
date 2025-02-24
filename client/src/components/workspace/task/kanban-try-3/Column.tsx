@@ -37,7 +37,7 @@ const Column: React.FC<ColumnProps> = ({
         const indicators = getIndicators();
         const { element } = getNearestIndicator(e, indicators);
 
-        const before = element.dataset.before || "-1";
+        const before = (element as HTMLElement).dataset.before || "-1";
 
         if (before !== cardId) {
             let copy = [...cards];
