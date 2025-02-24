@@ -10,12 +10,13 @@ const ProfileCover = () => {
     const userId = useUserId();
     const queryClient = useQueryClient();
 
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [_, setSelectedImage] = useState<File | null>(null); // _ : selectedImage
     const [previewImage, setPreviewImage] = useState(
         user?.profilePicture || ""
     );
 
-    const { mutate, isPending } = useMutation({
+    const { mutate } = useMutation({
+        // _ : isPending
         mutationFn: editUserProfileCoverMutationFn,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["userProfile"] });
