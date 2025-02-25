@@ -30,7 +30,7 @@ export const registerUserController = asyncHandler(
         const body = registerSchema.parse({
             ...req.body,
         });
-
+        console.log(req.body);
         await registerUserService(body);
 
         return res.status(HTTPSTATUS.CREATED).json({
