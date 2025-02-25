@@ -10,7 +10,6 @@ export const emailSchema = z
 export const passwordSchema = z.string().trim().min(4);
 
 export const registerSchema = z.object({
-    username: z.string().trim().min(1).max(255),
     name: z.string().trim().min(1).max(255),
     email: emailSchema,
     password: passwordSchema,
