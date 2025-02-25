@@ -32,7 +32,7 @@ const SignIn = () => {
     const [searchParams] = useSearchParams();
     const returnUrl = searchParams.get("returnUrl");
 
-    const { setAccessToken } = useStore;
+    const { setAccessToken } = useStore();
 
     const { mutate, isPending } = useMutation({
         mutationFn: loginMutationFn,
