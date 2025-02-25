@@ -12,10 +12,10 @@ const options = {
 
 const API = axios.create(options);
 
-API.interceptors.response.use((config) => {
+API.interceptors.request.use((config) => {
     const accessToken = useStore.getState().accessToken;
     if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`; // for Node.js Express back-end
+        config.headers["Authorization"] = `Bearer ${accessToken}`; // for Node.js Express back-end
     }
     return config;
 });
