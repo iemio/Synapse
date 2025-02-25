@@ -1,10 +1,28 @@
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link, useNavigate } from "react-router-dom";
+import { useStore } from "@/store/store";
+import React from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
-const GoogleOAuthFailure = () => {
+const GoogleOAuth = () => {
     const navigate = useNavigate();
+    const [params] = useSearchParams();
+    const { setAccessToken } = useStore();
+
+    const accessToken = params.get("accessToken");
+    const currentWorkspace = params.get("currentWorkspace");
+
+    React.useEffect(() => {
+        if (accessToken) {
+            setAccessToken(accessToken);
+            if (currentWorkspace) {
+                navigate(`/workspace/${currentWorkspace}`);
+            } else {
+                navigate("/");
+            }
+        }
+    }, [accessToken, currentWorkspace, navigate, setAccessToken]);
 
     return (
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
@@ -40,4 +58,4 @@ const GoogleOAuthFailure = () => {
     );
 };
 
-export default GoogleOAuthFailure;
+export default GoogleOAuth;
