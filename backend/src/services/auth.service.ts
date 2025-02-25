@@ -87,12 +87,11 @@ export const loginOrCreateAccountService = async (data: {
 };
 
 export const registerUserService = async (body: {
-    username: string;
     email: string;
     name: string;
     password: string;
 }) => {
-    const { username, email, name, password } = body;
+    const { email, name, password } = body;
     const session = await mongoose.startSession();
 
     try {
@@ -106,7 +105,6 @@ export const registerUserService = async (body: {
         }
 
         const user = new UserModel({
-            username,
             email,
             name,
             password,
