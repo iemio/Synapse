@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 
 export function DashboardSkeleton() {
     return (
@@ -7,7 +7,7 @@ export function DashboardSkeleton() {
             {/* Loader on top */}
             <div className="absolute inset-0 z-50 flex items-start pt-10 justify-center bg-[rgba(255,255,255,.01)]">
                 <div className="flex items-center space-x-2">
-                    <Loader size="25px" className="animate-spin" />
+                    <LoaderCircle size="25px" className="animate-spin" />
                     <span className="text-sm font-medium">Synapse...</span>
                 </div>
             </div>
