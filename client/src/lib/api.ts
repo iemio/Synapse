@@ -13,6 +13,7 @@ import {
     EditProjectPayloadType,
     EditUserAvatarType,
     EditUserType,
+    MemberByIdPayloadType,
     ProjectByIdPayloadType,
     ProjectResponseType,
 } from "../types/api.type";
@@ -261,6 +262,18 @@ export const deleteTaskMutationFn = async ({
 }> => {
     const response = await API.delete(
         `task/${taskId}/workspace/${workspaceId}/delete`
+    );
+    return response.data;
+};
+
+export const deleteMemberMutationFn = async ({
+    workspaceId,
+    memberId,
+}: MemberByIdPayloadType): Promise<{
+    message: string;
+}> => {
+    const response = await API.delete(
+        `/member/${memberId}/workspace/${workspaceId}/delete`
     );
     return response.data;
 };

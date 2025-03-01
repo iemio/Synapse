@@ -283,3 +283,8 @@ export type AllTaskResponseType = {
     tasks: TaskType[];
     pagination: PaginationType;
 };
+
+export type MemberByIdPayloadType = {
+    workspaceId: string;
+    memberId: string;
+};
